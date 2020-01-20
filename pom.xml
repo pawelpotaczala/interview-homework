@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.pawelpotaczala</groupId>
+    <artifactId>interview-homework</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <properties>
+        <jdk.version>11</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Dependency versions -->
+        <org.spockframework.spock-bom.version>2.0-M1-groovy-2.5</org.spockframework.spock-bom.version>
+        <org.codehaus.groovy.groovy.version>3.0.0-rc-2</org.codehaus.groovy.groovy.version>
+        <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
+        <org.apache.logging.log4j.log4j-api.version>2.13.0</org.apache.logging.log4j.log4j-api.version>
+        <org.apache.logging.log4j.log4j-core.version>2.13.0</org.apache.logging.log4j.log4j-core.version>
+
+        <!-- Plugin versions -->
+        <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
+        <org.apache.maven.plugins.maven-surefire-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-surefire-plugin.version>
+        <org.apache.maven.plugins.maven-failsafe-plugin.version>3.0.0-M4</org.apache.maven.plugins.maven-failsafe-plugin.version>
+        <org.ow2.asm.asm.version>6.2.1</org.ow2.asm.asm.version>
+        <org.codehaus.gmavenplus.gmavenplus-plugin.version>1.8.1</org.codehaus.gmavenplus.gmavenplus-plugin.version>
+    </properties>
+
+    <dependencies>
+        <!-- Mandatory dependencies for using Spock -->
+        <!-- https://mvnrepository.com/artifact/org.spockframework/spock-core -->
+        <dependency>
+            <groupId>org.spockframework</groupId>
+            <artifactId>spock-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Optional dependencies for using Spock -->
+        <!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy -->
+        <dependency> <!-- use a specific Groovy version rather than the one specified by spock-core -->
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>${org.codehaus.groovy.groovy.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${org.apache.logging.log4j.log4j-api.version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${org.apache.logging.log4j.log4j-core.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <!-- https://mvnrepository.com/artifact/org.spockframework/spock-bom -->
+        <dependencies>
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-bom</artifactId>
+                <version>${org.spockframework.spock-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- Added for JAVA 11 Support START-->
+            <!-- https://dzone.com/articles/migrating-springboot-applications-to-latest-java-v -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven-compiler-plugin.version}</version>
+                <configuration>
+                    <release>${jdk.version}</release>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <!-- update compiler plugin dependency on ASM for Java 11 compatibility -->
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>${org.ow2.asm.asm.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
+            </plugin>
+            <!-- Added for JAVA 11 Support END -->
+
+            <!-- Mandatory plugins for using Spock START -->
+            <!-- https://github.com/spockframework/spock-example/blob/master/pom.xml -->
+            <plugin>
+                <!-- The gmavenplus plugin is used to compile Groovy code. To learn more about this plugin,
+                visit https://github.com/groovy/GMavenPlus/wiki -->
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>${org.codehaus.gmavenplus.gmavenplus-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Mandatory plugins for using Spock END -->
+        </plugins>
+    </build>
+    
+</project>
