@@ -6,7 +6,7 @@ List of words in which particular letter occurs, should be sorted alphabetically
                                                                              
 #### Input text: 
     
-    ala ma kota, kot koduje w Javie Kota – (eng. Ala has a cat, a cat develops a cat in Java)
+    ala ma kota, kot koduje w Javie Kota
 
 #### Output:
 

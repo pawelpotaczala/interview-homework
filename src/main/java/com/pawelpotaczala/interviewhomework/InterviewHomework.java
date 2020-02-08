@@ -1,6 +1,8 @@
 package com.pawelpotaczala.interviewhomework;
 
-import com.pawelpotaczala.interviewhomework.output.Output;
+import com.pawelpotaczala.interviewhomework.service.TextService;
+import com.pawelpotaczala.interviewhomework.service.TextServiceImpl;
+import com.pawelpotaczala.interviewhomework.util.OutputPrinter;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
@@ -9,14 +11,11 @@ import java.util.*;
 public class InterviewHomework {
 
     public static void main(String[] args) {
-        try (Scanner scanner = new Scanner(System.in);) {
+        try (Scanner scanner = new Scanner(System.in)) {
             while (scanner.hasNextLine()) {
-                try {
-                    Output.printIndexEachLetterToWordsFrom(scanner.nextLine());
-                } catch (RuntimeException e) {
-                    log.error(e);
-                    System.out.println();
-                }
+                String text = scanner.nextLine();
+                TextService textService = TextServiceImpl.of(text);
+                OutputPrinter.print(textService.getAssignedWordsToContainingThemLetters());
             }
         }
     }

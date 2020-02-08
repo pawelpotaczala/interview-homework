@@ -1,17 +1,18 @@
-package com.pawelpotaczala.interviewhomework.input
+package com.pawelpotaczala.interviewhomework.validator
+
 
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class InputValidatorTest extends Specification {
+class TestValidatorTest extends Specification {
 
     @Unroll
-    def "'valid' method should not throw a runtime exception"() {
+    def "'validate' method should not throw a runtime exception for '#TEXT'"() {
         given: "a text from test cases"
         def text = TEXT
 
-        when: "invoke 'valid' method"
-        InputValidator.valid(text)
+        when: "invoke 'validate' method"
+        TextValidator.validate(text)
 
         then: "should not throw an exception"
         noExceptionThrown()
@@ -24,12 +25,12 @@ class InputValidatorTest extends Specification {
     }
 
     @Unroll
-    def "'valid' method should throw a runtime exception"() {
+    def "'validate' method should throw a runtime exception for '#TEXT'"() {
         given: "a text from test cases"
         def text = TEXT
 
         when: "invoke 'valid' method"
-        InputValidator.valid(text)
+        TextValidator.validate(text)
 
         then: "should throw an exception equals to expected"
         def exception = thrown(EXCEPTION)
@@ -38,7 +39,7 @@ class InputValidatorTest extends Specification {
 
         where: "test cases are below"
         TEXT             | EXCEPTION                | MESSAGE
-        null             | NullPointerException     | "Text cannot be null"
+        null             | IllegalArgumentException | "Text must contain words"
         ""               | IllegalArgumentException | "Text must contain words"
         "  "             | IllegalArgumentException | "Text must contain words"
         "Ala ma kota*"   | IllegalArgumentException | "String must contain only eng. letters, whitespace characters, commas and dots. Incorrect 1 chains of characters: *"

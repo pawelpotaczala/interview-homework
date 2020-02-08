@@ -1,20 +1,21 @@
-package com.pawelpotaczala.interviewhomework.input
+package com.pawelpotaczala.interviewhomework.service
 
 import com.pawelpotaczala.interviewhomework.UnitTestUtils
+import com.pawelpotaczala.interviewhomework.service.TextServiceImpl
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class InputConverterTest extends Specification {
+class TextServiceTest extends Specification {
 
     @Unroll
-    def "'indexEachLetterToWordsFrom' should correctly assign letters their words"() {
+    def "'getAssignedWordsToContainingThemLetters' should correctly assign letters their words for '#INPUT'"() {
         given: "a text from test cases"
         def input = INPUT
         and: "expected result of 'indexEachLetterToWordsFrom' method"
         def expected = UnitTestUtils.transform(OUTPUT)
 
-        when: "invoke real 'indexEachLetterToWordsFrom' method"
-        def actual = InputConverter.indexEachLetterToWordsFrom(input)
+        when: "invoke real 'getAssignedWordsToContainingThemLetters' method"
+        def actual = TextServiceImpl.newInstance(INPUT).getAssignedWordsToContainingThemLetters();
 
         then: "should not throw an exception"
         noExceptionThrown()
@@ -30,12 +31,12 @@ class InputConverterTest extends Specification {
     }
 
     @Unroll
-    def "'indexEachLetterToWordsFrom' should throw a runtime exception"() {
+    def "'getAssignedWordsToContainingThemLetters' should throw a runtime exception for '#TEXT'"() {
         given: "a text from test cases"
         def text = TEXT
 
         when: "invoke 'indexEachLetterToWordsFrom' method"
-        InputConverter.indexEachLetterToWordsFrom(text)
+        TextServiceImpl.newInstance(text).getAssignedWordsToContainingThemLetters();
 
         then: "should throw an exception equals to expected"
         def exception = thrown(EXCEPTION)
@@ -44,7 +45,7 @@ class InputConverterTest extends Specification {
 
         where: "test cases are below"
         TEXT                                        | EXCEPTION                | MESSAGE
-        null                                        | NullPointerException     | "Text cannot be null"
+        null                                        | IllegalArgumentException | "Text must contain words"
         ""                                          | IllegalArgumentException | "Text must contain words"
         "  "                                        | IllegalArgumentException | "Text must contain words"
         "Ala ma kota*"                              | IllegalArgumentException | "String must contain only eng. letters, whitespace characters, commas and dots. Incorrect 1 chains of characters: *"

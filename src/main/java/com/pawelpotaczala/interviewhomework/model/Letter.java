@@ -6,16 +6,16 @@ import lombok.Value;
 public class Letter implements Comparable<Letter> {
     private final char value;
 
+    public static Letter of(char value) {
+        return new Letter(value);
+    }
+
     private Letter(char value) {
         if(Character.isLetter(value)) {
             this.value = value;
         } else {
             throw new IllegalArgumentException("Character " + value + " is not a letter");
         }
-    }
-
-    public static Letter of(char value) {
-        return new Letter(value);
     }
 
     @Override
