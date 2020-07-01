@@ -18,7 +18,7 @@
         <org.codehaus.groovy.groovy.version>3.0.0-rc-2</org.codehaus.groovy.groovy.version>
         <org.projectlombok.lombok.version>1.18.10</org.projectlombok.lombok.version>
         <org.apache.logging.log4j.log4j-api.version>2.13.0</org.apache.logging.log4j.log4j-api.version>
-        <org.apache.logging.log4j.log4j-core.version>2.13.0</org.apache.logging.log4j.log4j-core.version>
+        <org.apache.logging.log4j.log4j-core.version>2.13.2</org.apache.logging.log4j.log4j-core.version>
 
         <!-- Plugin versions -->
         <org.apache.maven.plugins.maven-compiler-plugin.version>3.8.1</org.apache.maven.plugins.maven-compiler-plugin.version>
